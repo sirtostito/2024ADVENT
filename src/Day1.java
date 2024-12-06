@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Day1 {
     public static void main(String[] args) {
-        ArrayList<String> list = getFileData("inputs/lists");
+        ArrayList<String> list = getFileData("inputs/day1");
         ArrayList<Integer> leftList = new ArrayList<>();
         ArrayList<Integer> rightList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -39,7 +39,18 @@ public class Day1 {
         for (int i = 0; i < leftList.size(); i++) {
             total += Math.abs(leftList.get(i) - rightList.get(i));
         }
-        System.out.println(total);
+        System.out.println("2024 Advent Day 1 Part 1 -\nTotal minimum values added: " + total);
+
+        int similarityScore = 0;
+        for (int i = 0; i < leftList.size(); i++) {
+            int num = leftList.get(i);
+            for (int n = 0; n < rightList.size(); n++) {
+                if (num == rightList.get(n)) {
+                    similarityScore += num;
+                }
+            }
+        }
+        System.out.println("2024 Advent Day 1 Part 2 -\nTotal similarity score: " + similarityScore);
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
