@@ -8,23 +8,26 @@ public class Day2 {
     public static void main(String[] args) {
         ArrayList<String> list = getFileData("inputs/day2");
         int count = 0;
+        int count2 = 0;
         for (int i = 0; i < list.size(); i++) {
             ArrayList<Integer> report = new ArrayList<>();
             String repString = list.get(i);
-            System.out.println(repString);
             while (repString.indexOf(" ") > 0) {
                 report.add(Integer.parseInt(repString.substring(0,repString.indexOf(" "))));
                 repString = repString.substring(repString.indexOf(" ")+1);
             }
             report.add(Integer.parseInt(repString));
-            System.out.println(report);
             boolean safe = numDiff(report,increasing(report));
             if (safe) {
                 count++;
             }
-            System.out.println("Safe: " + safe);
+            safe = numDiff2(report,increasing(report));
+            if (safe) {
+                count2++;
+            }
         }
         System.out.println("2024 Advent Day 2 Part 1 -\nTotal safe reports: " + count);
+        System.out.println("2024 Advent Day 2 Part 2 -\nTotal safe reports: " + count2);
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
@@ -66,6 +69,38 @@ public class Day2 {
                 if (report.get(i) - report.get(i + 1) > 3
                 || report.get(i) - report.get(i + 1) < 1) {
                     return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean numDiff2(ArrayList<Integer> report, boolean isIncreasing) {
+        boolean fault = false;
+        if (isIncreasing) {
+            for (int i = 0; i < report.size() - 1; i++) {
+                if (report.get(i) - report.get(i + 1) < -3
+                        || report.get(i) - report.get(i + 1) > -1) {
+                    if (!fault) {
+                        report.remove(i+1);
+                        i--;
+                        fault = true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < report.size() - 1; i++) {
+                if (report.get(i) - report.get(i + 1) > 3
+                        || report.get(i) - report.get(i + 1) < 1) {
+                    if (!fault) {
+                        report.remove(i+1);
+                        i--;
+                        fault = true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
