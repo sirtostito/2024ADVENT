@@ -79,12 +79,16 @@ public class Day2 {
         boolean fault = false;
         if (isIncreasing) {
             for (int i = 0; i < report.size() - 1; i++) {
-                if (report.get(i) - report.get(i + 1) < -3
-                        || report.get(i) - report.get(i + 1) > -1) {
-                    if (!fault) {
+                if (report.get(i) - report.get(i + 1) < -3 || report.get(i) - report.get(i + 1) > -1) {
+                    if (fault == false) {
+                        System.out.println(report);
+                        int num = report.remove(i);
+                        boolean saved = numDiff(report,isIncreasing);
+                        report.add(i,num);
                         report.remove(i+1);
-                        i--;
-                        fault = true;
+                        boolean saved2 = numDiff(report,isIncreasing);
+                        System.out.println(saved || saved2);
+                        return saved || saved2;
                     } else {
                         return false;
                     }
@@ -92,12 +96,16 @@ public class Day2 {
             }
         } else {
             for (int i = 0; i < report.size() - 1; i++) {
-                if (report.get(i) - report.get(i + 1) > 3
-                        || report.get(i) - report.get(i + 1) < 1) {
-                    if (!fault) {
+                if (report.get(i) - report.get(i + 1) > 3 || report.get(i) - report.get(i + 1) < 1) {
+                    if (fault == false) {
+                        System.out.println(report);
+                        int num = report.remove(i);
+                        boolean saved = numDiff(report,isIncreasing);
+                        report.add(i,num);
                         report.remove(i+1);
-                        i--;
-                        fault = true;
+                        boolean saved2 = numDiff(report,isIncreasing);
+                        System.out.println(saved || saved2);
+                        return saved || saved2;
                     } else {
                         return false;
                     }
