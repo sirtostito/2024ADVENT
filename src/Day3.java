@@ -11,7 +11,12 @@ public class Day3 {
             String instruction = instructions.get(lines);
             while (instruction.contains("mul(")) {
                 int mul = instruction.indexOf("mul("); // first index of mul
-                String mulString = instruction.substring(mul,mul+11); // highest possible index for a valid mulString
+                String mulString;
+                if (instruction.length() - 1 < mul+11) {
+                    mulString = instruction.substring(mul, mul + 11); // highest possible index for a valid mulString
+                } else {
+                    mulString = instruction.substring(mul);
+                }
                 if (mulString.contains(")")) {
                     mulString = mulString.substring(0,mulString.indexOf(")") + 1);
                     if (mulString.contains(",")) {
@@ -22,8 +27,12 @@ public class Day3 {
                             Checks if the first field delimited by comma is numerical
                             Checks if the second field delimited by comma is numerical
                              */
-                            total += Integer.parseInt(nums[0]) * Integer.parseInt(nums[1]);
                             System.out.println(mulString);
+                            System.out.println(Integer.parseInt(nums[0]) + " " + Integer.parseInt(nums[1]));
+                            System.out.println(Integer.parseInt(nums[0]) * Integer.parseInt(nums[1]));
+                            System.out.println("Total: " + total);
+                            total += Integer.parseInt(nums[0]) * Integer.parseInt(nums[1]);
+                            System.out.println("New total: " + total);
                         }
                     }
                 }
