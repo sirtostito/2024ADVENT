@@ -18,14 +18,14 @@ public class Day4 {
         int count = 0;
         for (int y = 0; y < grid[0].length; y++) {
             for (int x = 0; x < grid.length; x++) {
-//                if (grid[x][y].equals("X") && checkAll(grid,x,y)) {
-//                    count++;
-//                }
+                if (grid[x][y].equals("X")) {
+                    count += checkAll(grid,x,y);
+                }
                 System.out.print(grid[x][y]);
             }
             System.out.println();
         }
-        System.out.println("Day 4 Part 1 -\nTotal XMAS: " + count);
+        System.out.println("Day 4 Part 1 -\nTotal XMAS: " + count); //not 1950 or 2557
     }
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
@@ -44,54 +44,63 @@ public class Day4 {
         }
     }
 
-    public static boolean checkVertical(String[][] grid, int x, int y) {
+    public static int checkVertical(String[][] grid, int x, int y) {
+        int count = 0;
         if (y < grid[0].length - 3) {
             if (grid[x][y+1].equals("M") && grid[x][y+2].equals("A") && grid[x][y+3].equals("S")) {
-                return true;
+                count++;
             }
         }
         if (y > 2) {
-            return grid[x][y - 1].equals("M") && grid[x][y - 2].equals("A") && grid[x][y - 3].equals("S");
+            if (grid[x][y - 1].equals("M") && grid[x][y - 2].equals("A") && grid[x][y - 3].equals("S")) {
+                count++;
+            }
         }
-        return false;
+        return count;
     }
 
-    public static boolean checkHorizontal(String[][] grid, int x, int y) {
+    public static int checkHorizontal(String[][] grid, int x, int y) {
+        int count = 0;
         if (x < grid.length - 3) {
             if (grid[x+1][y].equals("M") && grid[x+2][y].equals("A") && grid[x+3][y].equals("S")) {
-                return true;
+                count++;
             }
         }
         if (x > 2) {
-            return grid[x - 1][y].equals("M") && grid[x - 2][y].equals("A") && grid[x - 3][y].equals("S");
+            if (grid[x - 1][y].equals("M") && grid[x - 2][y].equals("A") && grid[x - 3][y].equals("S")) {
+                count++;
+            }
         }
-        return false;
+        return count;
     }
 
-    public static boolean checkDiagonal(String[][] grid, int x, int y) {
+    public static int checkDiagonal(String[][] grid, int x, int y) {
+        int count = 0;
         if (x < grid.length - 3 && y < grid[0].length - 3) { // south-east
             if (grid[x+1][y+1].equals("M") && grid[x+2][y+2].equals("A") && grid[x+3][y+3].equals("S")) {
-                return true;
+                count++;
             }
         }
         if (x < grid.length - 3  && y > 2) { // north-east
             if (grid[x+1][y-1].equals("M") && grid[x+2][y-2].equals("A") && grid[x+3][y-3].equals("S")) {
-                return true;
+                count++;
             }
         }
         if (x > 2 && y < grid[0].length - 3) { // south-west
             if (grid[x-1][y+1].equals("M") && grid[x-2][y+2].equals("A") && grid[x-3][y+3].equals("S")) {
-                return true;
+                count++;
             }
         }
         if (x > 2 && y > 2) { // north-west
-            return grid[x - 1][y - 1].equals("M") && grid[x - 2][y - 2].equals("A") && grid[x - 3][y - 3].equals("S");
+            if (grid[x - 1][y - 1].equals("M") && grid[x - 2][y - 2].equals("A") && grid[x - 3][y - 3].equals("S")) {
+                count++;
+            }
         }
-        return false;
+        return count;
     }
 
-    public static boolean checkAll(String[][] grid, int x, int y) {
-        return checkDiagonal(grid,x,y) || checkHorizontal(grid,x,y) || checkVertical(grid,x,y);
+    public static int checkAll(String[][] grid, int x, int y) {
+        return checkDiagonal(grid,x,y) + checkVertical(grid,x,y) + checkHorizontal(grid,x,y);
     }
 
 }
